@@ -1,0 +1,45 @@
+services:
+  nginx:
+    build: ./nginx
+    ports:
+      - 443:443
+    networks:
+      - nginx-net
+    volumes:
+      - wordpress_data:/var/www/html
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - wordpress
+  mariadb:
+    build: ./mariadb
+    networks:
+      - db-net
+    volumes:
+      - db-data:/var/lib/mysql
+    restart: always
+    env_file:
+      - .env
+  wordpress:
+    build: ./wordpress
+    networks:
+      - db-net
+      - nginx-net
+    restart: always
+    depends_on:
+      - mariadb
+    env_file:
+      - .env
+    volumes:
+      - wordpress_data:/var/www/html
+
+networks:
+  db-net:
+    driver: bridge
+  nginx-net:
+    driver: bridge
+
+volumes:
+  wordpress_data:
+  db-data:

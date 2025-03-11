@@ -2,8 +2,6 @@ include .env
 all: up
 
 up:
-	mkdir -p /Users/rintaro/risasada/inception/data/wp
-	mkdir -p /Users/rintaro/risasada/inception/data/db
 	docker-compose build
 	docker-compose up
 

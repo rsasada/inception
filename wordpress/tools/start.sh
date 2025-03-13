@@ -22,6 +22,9 @@ wp core install --allow-root \
   --admin_password=$WP_ADMIN_PWD \
   --admin_email=info@example.com
 
-wp theme install inspiro --activate --allow-root
+wp user create $WP_USER user@example.com \
+--role=editor \
+--user_pass=$WP_PWD \
+--allow-root
 
 php-fpm8.2 -F

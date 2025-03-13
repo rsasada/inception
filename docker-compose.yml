@@ -1,5 +1,6 @@
 services:
   nginx:
+    container_name: nginx
     build: ./nginx
     ports:
       - 443:443
@@ -13,6 +14,7 @@ services:
     depends_on:
       - wordpress
   mariadb:
+    container_name: mariadb
     build: ./mariadb
     networks:
       - db-net
@@ -27,14 +29,14 @@ services:
     env_file:
       - .env
   wordpress:
+    container_name: wordpress
     build: ./wordpress
     networks:
       - db-net
       - nginx-net
     restart: always
     depends_on:
-      mariadb:
-       condition: service_healthy
+      - mariadb
     env_file:
       - .env
     volumes:
